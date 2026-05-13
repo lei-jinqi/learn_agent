@@ -1,0 +1,5 @@
+incident_id,date,line_id,batch_id,defect_type,affected_quantity,stop_line_flag,impact_duration_min
+Q001,2026-05-03,Line-C,BATCH-C-0503,外观缺陷,120,true,40
+Q002,2026-05-13,Line-C,BATCH-C-0513,抽检不良率超阈值,85,true,45
+Q003,2026-05-18,Line-C,BATCH-C-0518,过程抽检不合格,60,true,45
+Q004,2026-05-24,Line-C,BATCH-C-0524,来料批次异常,100,true,50

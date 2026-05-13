@@ -1,0 +1,44 @@
+{
+  "task_id": "line_downtime_reason_analysis",
+  "task_name": "帮我分析一下这个月产线停机的主要原因",
+  "source": "产线停机分析任务树.pdf",
+  "intent": {
+    "task_type": "reason_analysis",
+    "keywords": ["本月", "这个月", "产线", "生产线", "停机", "停线", "停产", "主要原因", "原因分析", "根因"],
+    "low_confidence_threshold": 0.5
+  },
+  "goal": {
+    "objective": "输出本月产线停机 Top 原因、占比、影响产线与改进建议",
+    "time_range": "2026-05",
+    "objects": ["产线", "设备", "班次", "日期"],
+    "metrics": ["停机时长", "停机次数", "原因占比", "Top产线", "Top设备", "Pareto关键原因"]
+  },
+  "required_data": [
+    "downtime_records",
+    "equipment_alarms",
+    "maintenance_orders",
+    "material_shortage_records",
+    "quality_incidents"
+  ],
+  "allowed_tools": [
+    "query_table",
+    "data_quality_check",
+    "aggregate_downtime",
+    "pareto_analysis",
+    "correlate_root_causes",
+    "generate_svg_chart",
+    "call_dify_agent"
+  ],
+  "required_analysis": ["quality", "by_reason", "by_line", "by_equipment", "pareto_reason", "root_causes", "chart"],
+  "nodes": [
+    {"id": "commander_router", "role": "指挥官", "desc": "问题识别、输入解析、任务类型判定"},
+    {"id": "goal_agent", "role": "目标定义分身", "desc": "明确分析目标、指标口径与范围"},
+    {"id": "data_agent", "role": "数据准备分身", "desc": "通过数据适配层读取业务数据"},
+    {"id": "quality_agent", "role": "数据质量分身", "desc": "完整性检查与口径对齐"},
+    {"id": "metric_agent", "role": "现状评估专家", "desc": "计算停机总时长、次数、Top产线、Top设备"},
+    {"id": "diagnosis_agent", "role": "原因拆解专家", "desc": "按原因维度拆解并执行 Pareto 分析"},
+    {"id": "report_agent", "role": "结论输出专家", "desc": "生成结构化归因报告和分部门建议"},
+    {"id": "evaluator_agent", "role": "结果评估专家", "desc": "检查字段完整性、证据一致性和输出质量"}
+  ],
+  "output_schema": ["核心结论", "停机概览", "Top原因分析", "重点产线与设备", "根因解释", "分部门建议", "数据证据摘要", "质量评估"]
+}

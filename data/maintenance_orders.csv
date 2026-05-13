@@ -1,0 +1,8 @@
+order_id,date,equipment_id,fault_type,repair_action,repair_duration_min,repeated_fault_flag
+R001,2026-05-01,EQ-A01,送料模块卡滞,清洁送料轨道并复位,45,false
+R002,2026-05-02,EQ-A01,送料模块卡滞,更换磨损导轨,70,true
+R003,2026-05-05,EQ-A02,温控异常,校准温控传感器,60,false
+R004,2026-05-09,EQ-A01,送料模块卡滞,临时调整送料速度,50,true
+R005,2026-05-14,EQ-A01,送料模块故障,更换送料电机,95,true
+R006,2026-05-17,EQ-A01,送料模块复发,检查备件型号并重新装配,80,true
+R007,2026-05-20,EQ-A04,相机掉线,重启工控机并更新驱动,40,false

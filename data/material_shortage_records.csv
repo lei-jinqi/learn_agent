@@ -1,0 +1,5 @@
+shortage_id,date,line_id,material_id,shortage_duration_min,supplier,impact_description
+S001,2026-05-01,Line-B,MAT-1001,40,Supplier-X,关键物料配送延迟
+S002,2026-05-11,Line-B,MAT-1001,75,Supplier-X,供应商来料延迟
+S003,2026-05-16,Line-D,MAT-2048,45,Supplier-Y,替代料审批等待
+S004,2026-05-23,Line-B,MAT-1001,45,Supplier-X,配送窗口错过

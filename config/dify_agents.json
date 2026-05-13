@@ -1,0 +1,74 @@
+{
+  "base_url": "http://101.69.166.71:10081/v1/chat-messages",
+  "response_mode": "streaming",
+  "user": "line-downtime-local-orchestrator",
+  "enable_real_calls": true,
+  "timeout_seconds": 20,
+  "curl_source_pdf": "../S25：智能体.pdf",
+  "agents": [
+    {
+      "id": "current_assessment",
+      "name": "S25_产线停机分析_现状评估",
+      "role": "现状评估 Agent",
+      "api_key": "app-3M151UInNwBLUyU33u8GPDrO",
+      "task_tree_node": "metric_agent",
+      "source_curl": "curl -X POST 'http://101.69.166.71:10081/v1/chat-messages' --header 'Authorization: Bearer app-3M151UInNwBLUyU33u8GPDrO' --header 'Content-Type: application/json' --data-raw '{\"inputs\":{},\"query\":\"...\",\"response_mode\":\"streaming\",\"conversation_id\":\"\",\"user\":\"abc-123\",\"files\":[]}'",
+      "description": "负责从本月停机记录、设备报警、维修工单、缺料记录和质量异常输入中提取统计字段，按产线、设备、班次、日期和原因分类汇总停机次数、停机时长与影响产量，输出可用于原因拆解的停机现状评估结果。",
+      "input_contract": [
+        "downtime_records",
+        "equipment_alarms",
+        "maintenance_orders",
+        "material_shortage_records",
+        "quality_incidents"
+      ],
+      "output_contract": [
+        "downtime_summary",
+        "top_lines",
+        "top_equipments",
+        "top_reasons",
+        "data_gaps"
+      ]
+    },
+    {
+      "id": "cause_breakdown",
+      "name": "S25_产线停机分析_原因拆解",
+      "role": "原因拆解 Agent",
+      "api_key": "app-QOrzUjepgXaXZUpaiXL8uOF6",
+      "task_tree_node": "diagnosis_agent",
+      "source_curl": "curl -X POST 'http://101.69.166.71:10081/v1/chat-messages' --header 'Authorization: Bearer app-QOrzUjepgXaXZUpaiXL8uOF6' --header 'Content-Type: application/json' --data-raw '{\"inputs\":{},\"query\":\"...\",\"response_mode\":\"streaming\",\"conversation_id\":\"\",\"user\":\"abc-123\",\"files\":[]}'",
+      "description": "负责承接停机现状评估结果，对停机时长和停机次数进行 Pareto 拆解，并结合设备报警、维修记录、缺料等待、质量异常、换线调机和工艺参数线索定位主要原因、责任环节、证据依据与置信度，输出可用于最终结论归纳的原因拆解结果。",
+      "input_contract": [
+        "current_assessment",
+        "downtime_records",
+        "equipment_alarms",
+        "maintenance_orders",
+        "material_shortage_records",
+        "quality_incidents"
+      ],
+      "output_contract": [
+        "pareto_reasons",
+        "root_cause_hypotheses",
+        "evidence",
+        "confidence"
+      ]
+    },
+    {
+      "id": "conclusion_output",
+      "name": "S25_产线停机分析_结论输出",
+      "role": "结论输出 Agent",
+      "api_key": "app-EOAYQu0SFzY6ismhDIvfK1Xz",
+      "task_tree_node": "report_agent",
+      "source_curl": "curl -X POST 'http://101.69.166.71:10081/v1/chat-messages' --header 'Authorization: Bearer app-EOAYQu0SFzY6ismhDIvfK1Xz' --header 'Content-Type: application/json' --data-raw '{\"inputs\":{},\"query\":\"...\",\"response_mode\":\"streaming\",\"conversation_id\":\"\",\"user\":\"abc-123\",\"files\":[]}'",
+      "description": "负责基于停机现状和原因拆解结果，归纳本月产线停机的 Top 原因、影响产线、关键设备、责任部门、停机占比和影响产量，区分明确结论与待确认事项，并输出可直接给生产、设备、计划物料和质量部门使用的业务分析结论。",
+      "input_contract": [
+        "current_assessment",
+        "cause_breakdown"
+      ],
+      "output_contract": [
+        "final_report",
+        "department_actions",
+        "open_questions"
+      ]
+    }
+  ]
+}
