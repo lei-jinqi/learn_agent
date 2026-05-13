@@ -5,3 +5,7 @@ __pycache__/
 outputs/*.json
 outputs/*.md
 outputs/*.csv
+node_modules/
+dist/
+.vscode/
+.DS_Store
